@@ -57,13 +57,13 @@ namespace API.Controllers
             }
             using var hmac = new HMACSHA512(user.PasswordHash);
             var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            // for (int i = 0; i < computeHash.Length; i++)
-            // {
-            //     if (computeHash[i] != user.PasswordHash[i])
-            //     {
-            //         return Unauthorized("Invalid password!");
-            //     }
-            // }
+            for (int i = 0; i < computeHash.Length; i++)
+            {
+                // if (computeHash[i] != user.PasswordHash[i])
+                // {
+                //     return Unauthorized("Invalid password!");
+                // }
+            }
 
             return new UserDto
             {
