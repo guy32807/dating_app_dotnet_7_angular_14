@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
+import { Observable } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -10,20 +11,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./member-list.component.css'],
 })
 export class MemberListComponent implements OnInit {
-  members: Member[] = [];
+  members$: Observable<Member[]> | undefined;
   constructor(
     private memberService: MembersService,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.loadMembers();
-  }
-
-  loadMembers() {
-    this.memberService.getMembers().subscribe({
-      next: (response) => (this.members = response),
-      error: (err) => this.toastr.error(err.error),
-    });
+    this.members$ = this.memberService.getMembers();
   }
 }
